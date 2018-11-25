@@ -1,24 +1,22 @@
 package server
 
 import arch.ServerApplication
-import com.beust.klaxon.Klaxon
 import config.ServerAppConfig
 import logging.ConsoleLogger
 import logging.Logger
-import repo.MockConfigData
 import repo.MockRepository
-import repo.MockRepositoryEntry
-import java.io.File
 
 private var app: ServerApplication? = null
 private var appConfig: ServerAppConfig? = null
 private var logger: Logger? = null
 
 fun main(args: Array<String>?) {
+    appConfig = ServerAppConfig(false, "", 5050)
+    logger = ConsoleLogger()
+    app = ServerApplication(appConfig!!, logger as ConsoleLogger)
 
     var mockPackName = "base"
     var debugMode = false
-    var serverPort = 5050
 
     System.out.println("Tiny Handy Mock Server")
     System.out.println("Version 1.0")
@@ -34,8 +32,8 @@ fun main(args: Array<String>?) {
                 mockPackName = "?"
                 tokenLoopArg = "mockpack"
             } else if (str.toLowerCase() == "-list") {
-                logger = ConsoleLogger(debugMode)
-                showAllMockPacks()
+                logger = ConsoleLogger()
+                showAllMockPacks(app!!)
                 return
             } else if (str.toLowerCase() == "-port") {
                 tokenLoopArg = "port"
@@ -43,17 +41,15 @@ fun main(args: Array<String>?) {
                 showHelp()
                 return
             } else if (str.toLowerCase() == "-debug") {
-                debugMode = true
+                appConfig!!.debugMode = true
             } else if (tokenLoopArg == "mockpack") {
                 mockPackName = str
             } else if(tokenLoopArg == "port") {
-                serverPort = str.toInt()
+                appConfig!!.port = str.toInt()
             }
         }
     }
 
-    appConfig = ServerAppConfig(debugMode, mockPackName, serverPort)
-    logger = ConsoleLogger(appConfig!!.debugMode)
 
     if (mockPackName == "?" || mockPackName == "") {
         System.out.println("Usage: ./start-server -mockpack [mockpackname]")
@@ -61,14 +57,12 @@ fun main(args: Array<String>?) {
         return
     }
 
-    app = ServerApplication(appConfig!!, logger as ConsoleLogger)
-
     app!!.onStart()
 }
 
-private fun showAllMockPacks() {
+private fun showAllMockPacks(app: ServerApplication) {
     System.out.println("Available mockpacks:")
-    val mockRepository = MockRepository(app!!, appConfig!!, logger as ConsoleLogger)
+    val mockRepository = MockRepository(app!!, app.appConfig!!, app.logger as ConsoleLogger)
     val mocks = mockRepository.allMockPacks
     mocks.stream().filter { d -> !d.isHidden }.forEachOrdered { d -> System.out.println("\"" + d.path + "\"" + " - " + d.description) }
     System.out.println("")

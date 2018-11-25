@@ -47,6 +47,10 @@ class MockRepository(private val appContext: ServerApplication, private val appl
 
     val allMockPacks: List<MockConfigData>
         get() {
+            if( File(MOCKPACK_FOLDER_NAME).isDirectory == false) {
+                logger.info("Mockpack directory not found. Please create a mockpack directory.")
+                return emptyList()
+            }
             val mockPacks = FileUtils().listFiles(MOCKPACK_FOLDER_NAME)
             val mockList = ArrayList<MockConfigData>()
             for (mockPackName in mockPacks) {

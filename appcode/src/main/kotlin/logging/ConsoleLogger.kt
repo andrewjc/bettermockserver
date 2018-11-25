@@ -2,7 +2,7 @@ package logging
 
 import mu.KotlinLogging
 
-class ConsoleLogger(debugMode: Boolean) : Logger {
+class ConsoleLogger() : Logger {
     private val logger = KotlinLogging.logger {}
 
     override fun debug(s: String) {
