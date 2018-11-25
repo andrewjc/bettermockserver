@@ -1,0 +1,19 @@
+{
+  "request": {
+    "headers": {
+      "file":"$(/file:request@header.json/)"
+    },
+    "host": "http://127.0.0.1",
+    "method": "POST",
+    "uri": "/api/getprofile"
+  },
+  "response": {
+    "headers": {
+      "file":"$(/file:response@header.json/)"
+    },
+    "body": "You must be logged in to perform this action!",
+    "code": 404,
+    "message": "Access Denied",
+    "responseDelay": 1500
+  }
+}

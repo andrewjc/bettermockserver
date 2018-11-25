@@ -1,5 +1,5 @@
 {
     "Name": "base",
     "Description": "Common base requests/responses for all mock packs.",
-    "IsHidden": true
+    "IsHidden": false
 }

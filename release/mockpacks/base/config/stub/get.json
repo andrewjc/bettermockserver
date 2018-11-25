@@ -1,0 +1,19 @@
+{
+  "request": {
+    "headers": {
+      "file":"$(/file:request@header.json/)"
+    },
+    "host": "http://127.0.0.1",
+    "method": "POST",
+    "uri": "/api/getconfig"
+  },
+  "response": {
+    "headers": {
+      "file":"$(/file:response@header.json/)"
+    },
+    "body": "$(/file:response@body.json/)",
+    "code": 200,
+    "message": "OK",
+    "responseDelay": 3000
+  }
+}

@@ -43,6 +43,7 @@ fun main(args: Array<String>?) {
             } else if (str.toLowerCase() == "-debug") {
                 appConfig!!.debugMode = true
             } else if (tokenLoopArg == "mockpack") {
+                appConfig!!.mockPackName = str
                 mockPackName = str
             } else if(tokenLoopArg == "port") {
                 appConfig!!.port = str.toInt()
@@ -52,8 +53,8 @@ fun main(args: Array<String>?) {
 
 
     if (mockPackName == "?" || mockPackName == "") {
-        System.out.println("Usage: ./start-server -mockpack [mockpackname]")
-        System.out.println("Tip: -help to show usage")
+        logger!!.info("Usage: ./start-server -mockpack [mockpackname]")
+        logger!!.info("Tip: -help to show usage")
         return
     }
 
@@ -61,18 +62,18 @@ fun main(args: Array<String>?) {
 }
 
 private fun showAllMockPacks(app: ServerApplication) {
-    System.out.println("Available mockpacks:")
+    logger!!.info("Available mockpacks:")
     val mockRepository = MockRepository(app!!, app.appConfig!!, app.logger as ConsoleLogger)
     val mocks = mockRepository.allMockPacks
-    mocks.stream().filter { d -> !d.isHidden }.forEachOrdered { d -> System.out.println("\"" + d.path + "\"" + " - " + d.description) }
-    System.out.println("")
-    System.out.println("Run with: ./start-server -mockpack [packname]")
+    mocks.stream().filter { d -> !d.isHidden }.forEachOrdered { d -> logger!!.info("\"" + d.path + "\"" + " - " + d.description) }
+    logger!!.info("")
+    logger!!.info("Run with: ./start-server -mockpack [packname]")
 }
 
 private fun showHelp() {
-    System.out.println("Usage: ./start-server -mockpack [mockpackname]")
-    System.out.println("                      -list (List all mockpacks)")
-    System.out.println("                      -debug (Show verbose info)")
-    System.out.println("                      -socket-timeout [timeout-in-sec]")
-    System.out.println("                      -help (Show this info)")
+    logger!!.info("Usage: ./start-server -mockpack [mockpackname]")
+    logger!!.info("                      -list (List all mockpacks)")
+    logger!!.info("                      -debug (Show verbose info)")
+    logger!!.info("                      -socket-timeout [timeout-in-sec]")
+    logger!!.info("                      -help (Show this info)")
 }

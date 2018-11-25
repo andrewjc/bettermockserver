@@ -1,0 +1,6 @@
+{
+    "Name": "unauthenticated",
+    "Description": "A mockpack representing an unauthenticated user.",
+    "Parent": "base",
+    "IsHidden": false
+}

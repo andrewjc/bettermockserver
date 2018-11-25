@@ -16,7 +16,6 @@ open class FileUtils {
     }
 
     fun listFiles(path: String): Array<String> {
-        println("listFiles: $path")
         val files = ArrayList<String>()
         for (fileEntry in File(path).listFiles()!!) {
             files.add(fileEntry.name)

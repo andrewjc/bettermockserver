@@ -5,7 +5,7 @@
     },
     "host": "http://127.0.0.1",
     "method": "POST",
-    "uri": "/api/authenticate"
+    "uri": "/api/getprofile"
   },
   "response": {
     "headers": {

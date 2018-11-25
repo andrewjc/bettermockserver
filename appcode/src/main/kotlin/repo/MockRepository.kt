@@ -74,7 +74,7 @@ class MockRepository(private val appContext: ServerApplication, private val appl
         }
 
     fun setMockPack(mockPackName: String): Boolean {
-        logger.info("SetMockPack on $mockPackName")
+        logger.info("Loading the requested mockpack: $mockPackName")
 
         var ret = false
         if (this.mockPackage != null && this.mockPackage!! == mockPackName) {
@@ -229,11 +229,11 @@ class MockRepository(private val appContext: ServerApplication, private val appl
 
         if (configData != null) {
             if (configData!!.parent != null && !configData!!.parent!!.trim().isEmpty()) {
-                logger.info("Processing parent: " + configData!!.parent!!)
+                logger.debug("Processing parent: " + configData!!.parent!!)
                 loadedSuccessfully = processMockPack(configData!!.parent, mockEntryMap)
             }
 
-            logger.info("Loading mockpack: " + mockPackName!!)
+            logger.debug("Processing mockpack: " + mockPackName!!)
 
             // Load all files from the prepackaged assets
             val bundledFiles = FileUtils().listFiles(MOCKPACK_FOLDER_NAME + File.separator + mockPackName)

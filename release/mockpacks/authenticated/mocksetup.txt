@@ -1,0 +1,6 @@
+{
+    "Name": "authenticated",
+    "Description": "A mockpack representing an authenticated user that can access privileged resources.",
+    "Parent": "base",
+    "IsHidden": false
+}
