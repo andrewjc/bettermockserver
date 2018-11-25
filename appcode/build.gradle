@@ -1,0 +1,55 @@
+buildscript {
+    ext.kotlin_version = '1.3.10'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+group 'com.andrewjc'
+version '1.0-SNAPSHOT'
+
+apply plugin: "application"
+apply plugin: 'kotlin'
+mainClassName = 'server.MainKt'
+
+defaultTasks 'run'
+
+sourceCompatibility = 1.8
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin/'
+    test.java.srcDirs += 'src/test/kotlin/'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile 'com.beust:klaxon:3.0.1'
+    compile 'org.nanohttpd:nanohttpd:2.2.0'
+
+    compile 'io.github.microutils:kotlin-logging:1.6.20'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.5'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+jar {
+    manifest { attributes 'Main-Class': 'server.MainKt' }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
